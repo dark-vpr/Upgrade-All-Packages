@@ -8,6 +8,6 @@ cd Upgrade-All-Packages
 
 chmod 777 Ugpack
 
-mv Ugpack /bin/Ugpack
+mv Ugpack /usr/bin/Ugpack
 
 sudo Ugpack
