@@ -1,6 +1,6 @@
 # Upgrade-All-Packages
 
-Use one command upgrade all packages.
+Use one command to upgrade all packages.
 
 After cloning:
 
