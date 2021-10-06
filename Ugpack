@@ -17,6 +17,7 @@ echo
 echo 'Auto Remove:'
 echo
 sudo apt autoremove --purge
+echo
 sudo apt autoclean
 while true; do
 	echo
