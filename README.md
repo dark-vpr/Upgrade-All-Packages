@@ -1,13 +1,16 @@
 # Upgrade-All-Packages
 
-Use one command to upgrade all packages.
+Upgrade all your packages with just one command 
 
 After cloning:
-
 ```
 cd Upgrade-All-Packages
 chmod 777 Ugpack
-mv Ugpack /usr/bin/Ugpack
+mv Ugpack /usr/bin/Ugpack.
+```
+
+To run:
+```
 sudo Ugpack
 ```
 
