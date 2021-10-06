@@ -6,6 +6,8 @@ After cloning:
 
 cd Upgrade-All-Packages
 
+chmod 777 Ugpack
+
 mv Ugpack /bin/Ugpack
 
 sudo Ugpack
