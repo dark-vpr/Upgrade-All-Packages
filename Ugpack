@@ -1,0 +1,64 @@
+#!/bin/bash
+echo
+echo 'dpkg:'
+echo
+sudo dpkg --configure -a
+echo
+echo 'Fix Broken:'
+echo
+sudo apt --fix-broken install
+echo
+sudo apt update
+echo
+echo 'Full-Upgrade:'
+echo
+sudo apt full-upgrade
+echo
+echo 'Auto Remove:'
+echo
+sudo apt autoremove --purge
+while true; do
+	echo
+	read -p "Continue..... [s|Y|n]: " syn
+	syn=${syn:-'y'}
+	case $syn in
+	[yY]*)
+		pip list -o
+		pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U
+		break
+		;;
+	[sS]*)
+		pip list -o
+		while true; do
+			echo
+			read -p "Upgrade now..... [Y|n]: " yn
+			yn=${yn:-'y'}
+			case $yn in
+			[nN]*)
+				echo "Aborting....."
+				exit
+				;;
+			[yY]*)
+				pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U
+				exit
+				;;
+			*)
+				echo 'Wrong Choice.....'
+				;;
+			esac
+		done
+		break
+		;;
+	[nN]*)
+		echo "Aborting....."
+		exit
+		;;
+	*)
+		echo 'Wrong Choice.....'
+		;;
+	esac
+done
+echo
+echo 'Gem Update:'
+echo
+sudo gem update
