@@ -10,16 +10,17 @@ sudo apt --fix-broken install
 echo
 sudo apt update
 echo
-echo 'Full-Upgrade:'
+echo 'Upgrade:'
 echo
-sudo apt full-upgrade
+sudo apt upgrade
 echo
 echo 'Auto Remove:'
 echo
 sudo apt autoremove --purge
+sudo apt autoclean
 while true; do
 	echo
-	read -p "Continue..... [s|Y|n]: " syn
+	read -p "Continue to upgrade Python Packages..... [s|Y|n]: " syn
 	syn=${syn:-'y'}
 	case $syn in
 	[yY]*)
