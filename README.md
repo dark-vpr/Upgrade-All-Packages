@@ -1,23 +1,30 @@
 # Upgrade-All-Packages
 
-Upgrade all your packages with just one command 
+The best tool to Upgrade all your package
 
-After cloning:
+# Requirements
+- An operating system (tested on all Debain based OS)
+- Python
+- Ruby
+
+# Installation
 ```
+sudo apt install findutils
+git clone https://github.com/darkvpier/Upgrade-All-Packages.git
 cd Upgrade-All-Packages
 chmod 777 Ugpack
 mv Ugpack /usr/bin/Ugpack
 ```
 
-To run:
+# To run:
 ```
 sudo Ugpack
 ```
 
-Upgrading Python Packages:
+# Upgrading Python Packages:
 
-s: show the list of upgradable packages
+- s: Show the list of upgradable packages
 
-y: show the list of upgradable packages and then Upgrade all packages
+- y: Show the list of upgradable packages and then Upgrade them all
 
-n: Don't upgrade
+- n: Cancel the upgrade
