@@ -16,7 +16,7 @@ chmod 777 Ugpack
 mv Ugpack /usr/bin/Ugpack
 ```
 
-# To run:
+# To run
 ```
 sudo Ugpack
 ```
