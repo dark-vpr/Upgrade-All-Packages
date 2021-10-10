@@ -13,7 +13,7 @@ sudo apt install findutils
 git clone https://github.com/darkvpier/Upgrade-All-Packages.git
 cd Upgrade-All-Packages
 chmod 777 Ugpack
-mv Ugpack /usr/bin/Ugpack
+sudo mv Ugpack /usr/bin/Ugpack
 ```
 
 # To run
