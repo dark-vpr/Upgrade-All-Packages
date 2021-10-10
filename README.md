@@ -21,7 +21,7 @@ sudo mv Ugpack /usr/bin/Ugpack
 sudo Ugpack
 ```
 
-# Upgrading Python Packages:
+# Upgrading Python Packages
 
 - s: Show the list of upgradable packages
 
