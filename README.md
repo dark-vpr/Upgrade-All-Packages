@@ -1,5 +1,4 @@
 # Upgrade-All-Packages
-
 The best tool to Upgrade all your package
 
 ## Requirements
@@ -17,15 +16,14 @@ sudo mv Ugpack /usr/bin/Ugpack
 ```
 
 ## To run
-
 ```
 sudo Ugpack 
 ```
 
 ## Upgrading Python Packages
-
 - s: Show the list of upgradable packages
-
 - y: Show the list of upgradable packages and then Upgrade them all
-
 - n: Cancel the upgrade
+
+## Feedbacks
+If you have any suggestion or comment, please create an issue here. Any feedback is highly appreciated.
