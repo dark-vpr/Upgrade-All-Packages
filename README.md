@@ -2,12 +2,12 @@
 
 The best tool to Upgrade all your package
 
-# Requirements
+## Requirements
 - An operating system (tested on all Debain based OS)
 - Python
 - Ruby
 
-# Installation
+## Installation
 ```
 sudo apt install findutils
 git clone https://github.com/darkvpier/Upgrade-All-Packages.git
@@ -16,12 +16,13 @@ chmod 777 Ugpack
 sudo mv Ugpack /usr/bin/Ugpack
 ```
 
-# To run
+## To run
+
 ```
-sudo Ugpack
+sudo Ugpack 
 ```
 
-# Upgrading Python Packages
+## Upgrading Python Packages
 
 - s: Show the list of upgradable packages
 
