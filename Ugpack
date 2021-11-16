@@ -1,26 +1,48 @@
 #!/bin/bash
-echo
-echo 'dpkg:'
-echo
-sudo dpkg --configure -a
-echo
-echo 'Fix Broken:'
-echo
-sudo apt --fix-broken install
-echo
-sudo apt update
-echo
-echo 'Upgrade:'
-echo
-sudo apt upgrade
-echo
-echo 'Auto Remove:'
-echo
-sudo apt autoremove --purge
-echo
-sudo apt autoclean
+pkgu() {
+	dpkg --configure -a
+	echo
+	echo 'Fix Broken:'
+	echo
+	apt --fix-broken install
+	echo
+	apt update
+	echo
+	echo 'Upgrade:'
+	echo
+	pkg upgrade
+	echo
+	echo 'Auto Remove:'
+	echo
+	apt autoremove --purge
+	echo
+	apt autoclean
+}
 
-if python -V >/dev/null; then
+aptu() {
+	echo
+	echo 'dpkg:'
+	echo
+	dpkg --configure -a
+	echo
+	echo 'Fix Broken:'
+	echo
+	apt --fix-broken install
+	echo
+	apt update
+	echo
+	echo 'Upgrade:'
+	echo
+	apt upgrade
+	echo
+	echo 'Auto Remove:'
+	echo
+	apt autoremove --purge
+	echo
+	apt autoclean
+}
+
+pipu() {
 	while true; do
 		echo
 		read -p "Continue to Upgrade Python Packages..... [s|Y|n]: " syn
@@ -62,17 +84,23 @@ if python -V >/dev/null; then
 			;;
 		esac
 	done
-	if gem -v >/dev/null; then
-		echo
-		echo 'Gem Upgrade:'
-		echo
-		sudo gem update
-	fi
-else
-	if gem -v >/dev/null; then
-		echo
-		echo 'Gem Upgrade:'
-		echo
-		sudo gem update
-	fi
+}
+
+gemu() {
+	echo
+	echo 'Gem Upgrade:'
+	echo
+	gem update
+}
+
+if which pkg >/dev/null || [ -e $PREFIX/bin/pkg ]; then
+	pkgu
+elif which apt >/dev/null || [ -e $PREFIX/bin/apt ]; then
+	aptu
+fi
+if which pip >/dev/null || [ -e $PREFIX/bin/python ]; then
+	pipu
+fi
+if which gem >/dev/null || [ -e $PREFIX/bin/gem ]; then
+	gemu
 fi
