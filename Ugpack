@@ -19,48 +19,60 @@ echo
 sudo apt autoremove --purge
 echo
 sudo apt autoclean
-while true; do
-	echo
-	read -p "Continue to upgrade Python Packages..... [s|Y|n]: " syn
-	syn=${syn:-'y'}
-	case $syn in
-	[yY]*)
-		pip list -o
-		pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U
-		break
-		;;
-	[sS]*)
-		pip list -o
-		while true; do
-			echo
-			read -p "Upgrade now..... [Y|n]: " yn
-			yn=${yn:-'y'}
-			case $yn in
-			[nN]*)
-				echo "Aborting....."
-				break
-				;;
-			[yY]*)
-				pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U
-				break
-				;;
-			*)
-				echo 'Wrong Choice.....'
-				;;
-			esac
-		done
-		break
-		;;
-	[nN]*)
-		echo "Aborting....."
-		break
-		;;
-	*)
-		echo 'Wrong Choice.....'
-		;;
-	esac
-done
-echo
-echo 'Gem Update:'
-echo
-sudo gem update
+
+if python -V >/dev/null; then
+	while true; do
+		echo
+		read -p "Continue to Upgrade Python Packages..... [s|Y|n]: " syn
+		syn=${syn:-'y'}
+		case $syn in
+		[yY]*)
+			pip list -o
+			pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U
+			break
+			;;
+		[sS]*)
+			pip list -o
+			while true; do
+				echo
+				read -p "Upgrade now..... [Y|n]: " yn
+				yn=${yn:-'y'}
+				case $yn in
+				[nN]*)
+					echo "Aborting....."
+					break
+					;;
+				[yY]*)
+					pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U
+					break
+					;;
+				*)
+					echo 'Wrong Choice.....'
+					;;
+				esac
+			done
+			break
+			;;
+		[nN]*)
+			echo "Aborting....."
+			break
+			;;
+		*)
+			echo 'Wrong Choice.....'
+			;;
+		esac
+	done
+	if gem -v >/dev/null; then
+		echo
+		echo 'Gem Upgrade:'
+		echo
+		sudo gem update
+	fi
+else
+	if gem -v >/dev/null; then
+		echo
+		echo 'Gem Upgrade:'
+		echo
+		sudo gem update
+	fi
+fi
