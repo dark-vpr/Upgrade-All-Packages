@@ -5,6 +5,7 @@ pkgu() {
 	echo
 	pkg upgrade
 	echo
+	echo
 	echo 'Auto Remove:'
 	echo
 	apt autoremove --purge
@@ -28,6 +29,7 @@ aptu() {
 	echo
 	apt upgrade
 	echo
+	echo
 	echo 'Auto Remove:'
 	echo
 	apt autoremove --purge
@@ -37,6 +39,7 @@ aptu() {
 
 pipu() {
 	while true; do
+		echo
 		echo
 		read -p "Continue to Upgrade Python Packages..... [s|Y|n]: " syn
 		syn=${syn:-'y'}
@@ -80,6 +83,7 @@ pipu() {
 }
 
 gemu() {
+	echo
 	echo
 	echo 'Gem Upgrade:'
 	echo
