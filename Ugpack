@@ -86,14 +86,14 @@ gemu() {
 	gem update
 }
 
-if which pkg >/dev/null >$PREFIX/dev/null || [ -e $PREFIX/bin/pkg ]; then
+if [ -e $PREFIX/bin/pkg ]; then
 	pkgu
-elif which apt >/dev/null >$PREFIX/dev/null || [ -e $PREFIX/bin/apt ]; then
+elif [ -e $PREFIX/bin/apt ]; then
 	aptu
 fi
-if which pip >/dev/null >$PREFIX/dev/null || [ -e $PREFIX/bin/python ]; then
+if [ -e $PREFIX/bin/python ]; then
 	pipu
 fi
-if which gem >/dev/null >$PREFIX/dev/null || [ -e $PREFIX/bin/gem ]; then
+if [ -e $PREFIX/bin/gem ]; then
 	gemu
 fi
