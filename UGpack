@@ -4,7 +4,6 @@ BOLD="\033[1m"
 YELLOW="\033[0;33m"
 BLUE='\033[1;94m'
 
-
 pkgu() {
 	echo
 	echo "\n${BLUE}%s${RESET}\n"'Upgrade:'
@@ -42,19 +41,6 @@ aptu() {
 	echo
 	apt autoclean
 }
-toolu() {
-	cd $1
-	echo
-	printf "\n${BLUE}%s${RESET}\n" "Updating GitHub Packages:"
-	for plugin in */; do
-		if [ -d "$plugin/.git" ]; then
-			echo
-			printf "${YELLOW}${BOLD}%s${RESET}\n" "${plugin%/}"
-			git -C "$plugin" pull
-		fi
-	done
-}
-
 pipu() {
 	while true; do
 		echo
@@ -108,14 +94,42 @@ gemu() {
 	gem update
 }
 
-if [ -e /home/*/.gitugpack ]; then
-	for i in $(cat /home/*/.gitugpack); do
-		toolu $i
+toolu() {
+	cd $1
+	echo
+	printf "\n${BLUE}%s${RESET}\n" "Updating GitHub Packages("${PWD##*/}"):"
+	if [ -d ".git" ]; then
+		echo
+		printf "${YELLOW}${BOLD}%s${RESET}\n" "${PWD##*/}"
+		git pull
+	fi
+	for plugin in */; do
+		if [ -d "$plugin/.git" ]; then
+			echo
+			printf "${YELLOW}${BOLD}%s${RESET}\n" "${plugin%/}"
+			git -C "$plugin" pull
+		fi
 	done
-elif [ -e $HOME/.gitugpack ]; then
-	for i in $(cat $HOME/.gitugpack); do
-		toolu $i
-	done
+}
+
+if [ -e /opt/ugpack.conf ]; then
+	while read LINE; do
+		if echo "$LINE" | grep -q "#"; then
+			continue
+		else
+			echo $LINE
+			toolu $LINE
+		fi
+	done </opt/ugpack.conf | grep -v '^[[:space:]]*$'
+elif [ -e /data/data/com.termux/files/usr/opt/ugpack.conf ]; then
+	while read LINE; do
+		if echo "$LINE" | grep -q "#"; then
+			continue
+		else
+			echo $LINE
+			toolu $LINE
+		fi
+	done </data/data/com.termux/files/usr/opt/ugpack.conf | grep -v '^[[:space:]]*$'
 fi
 
 if [ -e $PREFIX/bin/pkg ]; then
@@ -129,3 +143,5 @@ fi
 if [ -e $PREFIX/bin/gem ]; then
 	gemu
 fi
+
+#GIT PACKAGES
