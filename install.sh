@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 if [ -e /bin/UGpack ]; then
     echo
     echo "UGpack has already been Installed....."
@@ -11,7 +11,7 @@ if [ -e /bin/UGpack ]; then
             break
             ;;
         [yY]*)
-            sudo ln -sf $PWD/UGpack /bin/UGpack
+            sudo ln -sf $PWD/resources/UGpack /bin/UGpack
             echo
             echo "Installation Completed.... (To Run Enter \"sudo UGpack\")"
             break
@@ -22,7 +22,7 @@ if [ -e /bin/UGpack ]; then
         esac
     done
 else
-    sudo ln -sf $PWD/UGpack /bin/UGpack
+    sudo ln -sf $PWD/resources/UGpack /bin/UGpack
     echo
     echo "Installation Completed.... (To Run Enter \"sudo UGpack\")"
 fi
@@ -31,13 +31,10 @@ if [ -e /opt/ugpack.conf ]; then
     echo
     echo
     echo "Current Git Paths:"
+    echo
     while read LINE; do
-        if echo "$LINE" | grep -q "#"; then
-            continue
-        else
-            echo $LINE
-        fi
-    done </opt/ugpack.conf
+        echo $LINE
+    done < <(grep -v "^#\|^$" /opt/ugpack.conf)
     echo
     while true; do
         echo
@@ -53,6 +50,6 @@ else
     while true; do
         echo
         read -p "Enter The Path to your Git Package (if none, press ctrl + c): " gp
-        sudo echo $gp >>/opt/ugpack.conf
-    done
+        sudo echo $gp >> /opt/ugpack.conf
+    done < <(grep -v "^#\|^$" /opt/ugpack.conf)
 fi

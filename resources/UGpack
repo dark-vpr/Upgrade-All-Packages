@@ -112,25 +112,6 @@ toolu() {
 	done
 }
 
-if [ -e /opt/ugpack.conf ]; then
-	while read LINE; do
-		if echo "$LINE" | grep -q "#"; then
-			continue
-		else
-			echo $LINE
-			toolu $LINE
-		fi
-	done </opt/ugpack.conf | grep -v '^[[:space:]]*$'
-elif [ -e /data/data/com.termux/files/usr/opt/ugpack.conf ]; then
-	while read LINE; do
-		if echo "$LINE" | grep -q "#"; then
-			continue
-		else
-			echo $LINE
-			toolu $LINE
-		fi
-	done </data/data/com.termux/files/usr/opt/ugpack.conf | grep -v '^[[:space:]]*$'
-fi
 
 if [ -e $PREFIX/bin/pkg ]; then
 	pkgu
@@ -145,3 +126,12 @@ if [ -e $PREFIX/bin/gem ]; then
 fi
 
 #GIT PACKAGES
+if [ -e /opt/ugpack.conf ]; then
+	while read LINE; do
+		toolu $LINE
+	done < <(grep -v "^#\|^$" /opt/ugpack.conf)
+elif [ -e /data/data/com.termux/files/usr/opt/ugpack.conf ]; then
+	while read LINE; do
+		toolu $LINE
+	done < <(grep -v "^#\|^$" /data/data/com.termux/files/usr/opt/ugpack.conf)
+fi
