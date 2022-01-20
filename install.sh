@@ -24,7 +24,7 @@ if [ -e /bin/UGpack ]; then
 else
     sudo ln -sf $PWD/resources/UGpack /bin/UGpack
     echo
-    echo "Installation Completed.... (To Run Enter \"sudo UGpack\")"
+    printf "Installation Completed.... (To Run Enter \"sudo UGpack\")"
 fi
 
 if [ -e /opt/ugpack.conf ]; then
@@ -51,5 +51,5 @@ else
         echo
         read -p "Enter The Path to your Git Package (if none, press ctrl + c): " gp
         sudo echo $gp >> /opt/ugpack.conf
-    done < <(grep -v "^#\|^$" /opt/ugpack.conf)
+    done
 fi

@@ -51,5 +51,5 @@ else
         echo
         read -p "Enter The Path to your Git Package (if none, press ctrl + c): " gp
         echo $gp >>/data/data/com.termux/files/usr/opt/ugpack.conf
-    done < <(grep -v "^#\|^$" /data/data/com.termux/files/usr/opt/ugpack.conf)
+    done
 fi
