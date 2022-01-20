@@ -51,5 +51,5 @@ else
         echo
         read -p "Enter The Path to your Git Package (if none, press ctrl + c): " gp
         sudo echo $gp >> /opt/ugpack.conf
-    done < <(grep -v "^#\|^$" /opt/ugpack.conf)
+    done
 fi
