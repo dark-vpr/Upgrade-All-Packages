@@ -23,7 +23,7 @@ The best tool to Upgrade all your package, now works with termux.
 sudo apt install findutils git
 git clone https://github.com/darkvpier/Upgrade-All-Packages.git
 cd Upgrade-All-Packages
-sudo ./install.sh
+./install.sh
 ```
 
 ### On Termux
@@ -31,7 +31,7 @@ sudo ./install.sh
 pkg install findutils git
 git clone https://github.com/darkvpier/Upgrade-All-Packages.git
 cd Upgrade-All-Packages
-./termux-install.sh
+./install.sh
 ```
 
 ## Usage
