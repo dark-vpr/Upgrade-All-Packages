@@ -13,7 +13,7 @@ if [ -e /data/data/com.termux/files/usr/bin/UGpack ]; then
         [yY]*)
             ln -sf $PWD/resources/UGpack /data/data/com.termux/files/usr/bin/UGpack
             echo
-            echo "Installation Completed.... (To Run Enter \" UGpack\")"
+            echo "Installation Completed.... (To Run Enter \"UGpack\")"
             break
             ;;
         *)
@@ -24,7 +24,7 @@ if [ -e /data/data/com.termux/files/usr/bin/UGpack ]; then
 else
     ln -sf $PWD/resources/UGpack /data/data/com.termux/files/usr/bin/UGpack
     echo
-    echo "Installation Completed.... (To Run Enter \" UGpack\")"
+    echo "Installation Completed.... (To Run Enter \"UGpack\")"
 fi
 
 if [ -e /data/data/com.termux/files/usr/opt/ugpack.conf ]; then
