@@ -15,8 +15,7 @@ The best tool to Upgrade all your package, now works with termux.
 sudo apt install findutils git
 git clone https://github.com/darkvpier/Upgrade-All-Packages.git
 cd Upgrade-All-Packages
-chmod 777 Ugpack
-sudo mv Ugpack /usr/bin/Ugpack
+sudo ./install.sh
 ```
 
 ### On Termux
@@ -24,18 +23,17 @@ sudo mv Ugpack /usr/bin/Ugpack
 pkg install findutils git
 git clone https://github.com/darkvpier/Upgrade-All-Packages.git
 cd Upgrade-All-Packages
-chmod 777 Ugpack
-mv Ugpack $PREFIX/bin/Ugpack
+./termux-install.sh
 ```
 
 ## Usage
 ### Root:
 ```
-sudo Ugpack 
+sudo UGpack 
 ```
-### Non-Root:
+### Non-Root (Termux):
 ```
-Ugpack 
+UGpack 
 ```
 ## Upgrading Python Packages
 - `s`: Show the list of upgradable packages
