@@ -6,7 +6,7 @@ BLUE='\033[1;94m'
 
 pkgu() {
 	echo
-	echo "\n${BLUE}%s${RESET}\n"'Upgrade:'
+	printf "\n${BLUE}%s${RESET}\n" "Upgrade:"
 	echo
 	pkg upgrade
 	echo

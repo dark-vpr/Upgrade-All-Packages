@@ -4,9 +4,17 @@ The best tool to Upgrade all your package, now works with termux.
 ## Prerequisites
 - A Unix-like operating system (tested on all Debain based OS)
 - `apt` or `pkg`: Package Manager
+- `git` should be installed
 - `pip`: Package Manager for Python (Optional)
 - `gem`: Package Manager for Ruby (Optional)
-- `git` should be installed
+
+
+## Supported Packages
+- `apt` Packages
+- `pkg` Packages
+- `Python pip` Packages
+- `RubyGems` Packages
+- `Git` Packages
 
 ## Installation
 ### On Debian-based GNU/Linux distributions
