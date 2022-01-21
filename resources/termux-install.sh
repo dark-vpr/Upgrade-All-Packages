@@ -27,29 +27,30 @@ else
     echo "Installation Completed.... (To Run Enter \"UGpack\")"
 fi
 
-if [ -e /data/data/com.termux/files/usr/opt/ugpack.conf ]; then
+if [ -e /data/data/com.termux/files/usr/etc/UGpack/ ]; then
     echo
     echo
     echo "Current Git Paths:"
     echo
     while read LINE; do
         echo $LINE
-    done < <(grep -v "^#\|^$" /data/data/com.termux/files/usr/opt/ugpack.conf)
+    done < <(grep -v "^#\|^$" /data/data/com.termux/files/usr/etc/UGpack/ugpack.conf)
     echo
     while true; do
         echo
         read -p "Enter the Path to your Git Packages (if none, Press ctrl + c): " gp
-        echo $gp >>/data/data/com.termux/files/usr/opt/ugpack.conf
+        echo $gp >>/data/data/com.termux/files/usr/etc/UGpack/ugpack.conf
     done
 else
     echo
-    touch /data/data/com.termux/files/usr/opt/ugpack.conf
-    chmod 666 /data/data/com.termux/files/usr/opt/ugpack.conf
-    echo "# Add the Path of your Git Packages" >/data/data/com.termux/files/usr/opt/ugpack.conf
-    echo >>/data/data/com.termux/files/usr/opt/ugpack.conf
+    mkdir /data/data/com.termux/files/usr/etc/UGpack/
+    touch /data/data/com.termux/files/usr/etc/UGpack/ugpack.conf
+    chmod 666 /data/data/com.termux/files/usr/etc/UGpack/ugpack.conf
+    echo "# Add the Path of your Git Packages" >/data/data/com.termux/files/usr/etc/UGpack/ugpack.conf
+    echo >>/data/data/com.termux/files/usr/etc/UGpack/ugpack.conf
     while true; do
         echo
         read -p "Enter The Path to your Git Package (if none, press ctrl + c): " gp
-        echo $gp >>/data/data/com.termux/files/usr/opt/ugpack.conf
+        echo $gp >>/data/data/com.termux/files/usr/etc/UGpack/ugpack.conf
     done
 fi
