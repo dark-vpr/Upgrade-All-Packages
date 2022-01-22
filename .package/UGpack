@@ -126,12 +126,12 @@ if [ -e $PREFIX/bin/gem ]; then
 fi
 
 #GIT PACKAGES
-if [ -e /opt/ugpack.conf ]; then
+if [ -e /etc/UGpack/ugpack.conf ]; then
 	while read LINE; do
 		toolu $LINE
-	done < <(grep -v "^#\|^$" /opt/ugpack.conf)
-elif [ -e /data/data/com.termux/files/usr/opt/ugpack.conf ]; then
+	done < <(grep -v "^#\|^$" /etc/UGpack/ugpack.conf)
+elif [ -e /data/data/com.termux/files/usr/etc/UGpack/ugpack.conf ]; then
 	while read LINE; do
 		toolu $LINE
-	done < <(grep -v "^#\|^$" /data/data/com.termux/files/usr/opt/ugpack.conf)
+	done < <(grep -v "^#\|^$" /data/data/com.termux/files/usr/etc/UGpack/ugpack.conf)
 fi
