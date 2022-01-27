@@ -43,7 +43,7 @@ if [ -e /etc/UGpack/ ]; then
     done
 else
     echo
-    mkdir /etc/UGpack/
+    sudo mkdir /etc/UGpack/
     sudo touch /etc/UGpack/ugpack.conf
     sudo chmod 666 /etc/UGpack/ugpack.conf
     sudo echo "# Add the Path of your Git Packages" >/etc/UGpack/ugpack.conf
