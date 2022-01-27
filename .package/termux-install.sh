@@ -4,7 +4,7 @@ if [ -e /data/data/com.termux/files/usr/bin/UGpack ]; then
     echo "UGpack has already been Installed....."
     while true; do
         echo
-        read -p "Do you replace existing Package..... [Y|n]: " yn
+        read -p "Do you replace existing Package..... [y|n]: " yn
         case $yn in
         [nN]*)
             echo "Aborting....."
