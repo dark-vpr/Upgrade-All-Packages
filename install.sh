@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ -e /data/data/com.termux/files/usr/bin/termux-reload-settings ]; then
+if [ $OSTYPE == "linux-android" ]; then
 	$PWD/.package/termux-install.sh
 else
 	$PWD/.package/debain-install.sh
