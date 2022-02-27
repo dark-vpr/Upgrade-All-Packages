@@ -4,4 +4,5 @@ if [ $OSTYPE == "linux-android" ]; then
 else 
 	if [ $OSTYPE == "linux-gnu" ]; then
 	$PWD/.package/debain-install.sh
+	fi
 fi
