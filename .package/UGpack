@@ -116,7 +116,7 @@ if [ $(command -v pkg) ]; then
 elif [ $(command -v apt) ]; then
 	aptu
 fi
-if [ $(command -v python) ]; then
+if [ $(command -v pip) ]; then
 	pipu
 fi
 if [ $(command -v gem) ]; then
