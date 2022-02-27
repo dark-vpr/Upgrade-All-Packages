@@ -5,7 +5,6 @@ YELLOW="\033[0;33m"
 BLUE='\033[1;94m'
 
 pkgu() {
-	echo
 	printf "\n${BLUE}%s${RESET}\n" "Upgrade:"
 	echo
 	pkg upgrade
@@ -19,7 +18,6 @@ pkgu() {
 }
 
 aptu() {
-	echo
 	echo 'dpkg:'
 	echo
 	dpkg --configure -a
@@ -113,24 +111,24 @@ toolu() {
 }
 
 
-if [ -e $PREFIX/bin/pkg ]; then
+if [ $(command -v pkg) ]; then
 	pkgu
-elif [ -e $PREFIX/bin/apt ]; then
+elif [ $(command -v apt) ]; then
 	aptu
 fi
-if [ -e $PREFIX/bin/python ]; then
+if [ $(command -v python) ]; then
 	pipu
 fi
-if [ -e $PREFIX/bin/gem ]; then
+if [ $(command -v gem) ]; then
 	gemu
 fi
 
 #GIT PACKAGES
-if [ -e /etc/UGpack/ugpack.conf ]; then
+if [ -f /etc/UGpack/ugpack.conf ]; then
 	while read LINE; do
 		toolu $LINE
 	done < <(grep -v "^#\|^$" /etc/UGpack/ugpack.conf)
-elif [ -e /data/data/com.termux/files/usr/etc/UGpack/ugpack.conf ]; then
+elif [ -f /data/data/com.termux/files/usr/etc/UGpack/ugpack.conf ]; then
 	while read LINE; do
 		toolu $LINE
 	done < <(grep -v "^#\|^$" /data/data/com.termux/files/usr/etc/UGpack/ugpack.conf)
