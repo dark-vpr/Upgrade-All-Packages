@@ -48,7 +48,7 @@ pipu() {
 		case $syn in
 		[yY]*)
 			pip list -o
-			pip list --outdated --format=freeze | sed -e "s/==/>=/gI" | xargs -n1 pip install -U
+			pip list --outdated --format=freeze | sed -e "s/==.*//gI" | xargs -n1 pip install -U
 			break
 			;;
 		[sS]*)
@@ -63,7 +63,7 @@ pipu() {
 					break
 					;;
 				[yY]*)
-					pip list --outdated --format=freeze | sed -e "s/==/>=/gI" | xargs -n1 pip install -U
+					pip list --outdated --format=freeze | sed -e "s/==.*//gI" | xargs -n1 pip install -U
 					break
 					;;
 				*)
