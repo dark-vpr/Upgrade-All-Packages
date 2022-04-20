@@ -20,7 +20,7 @@ The best tool to Upgrade all your package, now works with termux.
 ### On Debian-based GNU/Linux distributions
 **Non-Root Users, please remove the command _sudo_ from the beginning**
 ```
-sudo apt install findutils git
+sudo apt install findutils git -y
 git clone https://github.com/darkvpier/Upgrade-All-Packages.git
 cd Upgrade-All-Packages
 ./install.sh
@@ -28,7 +28,7 @@ cd Upgrade-All-Packages
 
 ### On Termux
 ```
-pkg install findutils git
+pkg install findutils git -y
 git clone https://github.com/darkvpier/Upgrade-All-Packages.git
 cd Upgrade-All-Packages
 ./install.sh
