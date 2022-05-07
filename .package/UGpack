@@ -39,6 +39,15 @@ aptu() {
 	echo
 	apt autoclean
 }
+
+flatu() {
+	echo
+	echo
+	echo 'Flatpak Upgrade:'
+	echo
+	flatpak update
+}
+
 pipu() {
 	while true; do
 		echo
@@ -110,15 +119,20 @@ toolu() {
 	done
 }
 
-
 if [ $(command -v pkg) ]; then
 	pkgu
 elif [ $(command -v apt) ]; then
 	aptu
 fi
+
+if [ $(command -v flatpak) ]; then
+	flatu
+fi
+
 if [ $(command -v pip) ]; then
 	pipu
 fi
+
 if [ $(command -v gem) ]; then
 	gemu
 fi
