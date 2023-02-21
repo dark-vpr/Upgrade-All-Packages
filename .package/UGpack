@@ -57,7 +57,7 @@ pipu() {
 		case $syn in
 		[yY]*)
 			pip list -o
-			pip list --outdated --format=freeze | sed -e "s/==.*//gI" | xargs -n1 pip install -U
+			pip list -o | awk 'NR==3 {print NR,$1}' | awk '{print $2}'| xargs -n1 pip install -U
 			break
 			;;
 		[sS]*)
@@ -72,7 +72,7 @@ pipu() {
 					break
 					;;
 				[yY]*)
-					pip list --outdated --format=freeze | sed -e "s/==.*//gI" | xargs -n1 pip install -U
+					pip list -o | awk 'NR==3 {print NR,$1}' | awk '{print $2}'| xargs -n1 pip install -U
 					break
 					;;
 				*)
