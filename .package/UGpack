@@ -106,6 +106,14 @@ fisheru() {
 	echo
   fisher update
 }
+tmuxu() {
+	echo
+	echo
+	echo 'Tmux Plugins Upgrade:'
+	echo
+  ./.tmux/plugins/tpm/bin/update_plugins all
+}
+
 
 toolu() {
 	cd $1
@@ -145,6 +153,10 @@ fi
 
 if [$(command -v fisher)]; then
   fisheru
+fi
+
+if [ -f ./.tmux/plugins/tpm/bin/update_plugins ]; then
+  tmuxu
 fi
 
 #GIT PACKAGES

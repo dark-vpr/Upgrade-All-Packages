@@ -17,6 +17,7 @@ The best tool to Upgrade all your package, now works with termux.
 - `Python pip` Packages
 - `RubyGems` Packages
 - `Git` Packages
+- `Tmux Plugins` Packages
 
 ## Installation
 ### On Debian-based GNU/Linux distributions
