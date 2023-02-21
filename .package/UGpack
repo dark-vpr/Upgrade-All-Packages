@@ -92,13 +92,19 @@ pipu() {
 		esac
 	done
 }
-
 gemu() {
 	echo
 	echo
 	echo 'Gem Upgrade:'
 	echo
 	gem update
+}
+fisheru() {
+	echo
+	echo
+	echo 'Fisher Upgrade:'
+	echo
+  fisher update
 }
 
 toolu() {
@@ -135,6 +141,10 @@ fi
 
 if [ $(command -v gem) ]; then
 	gemu
+fi
+
+if [$(command -v fisher)]; then
+  fisheru
 fi
 
 #GIT PACKAGES
