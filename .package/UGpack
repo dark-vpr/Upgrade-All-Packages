@@ -111,7 +111,7 @@ tmuxu() {
 	echo
 	echo 'Tmux Plugins Upgrade:'
 	echo
-  ./.tmux/plugins/tpm/bin/update_plugins all
+  ~/.tmux/plugins/tpm/bin/update_plugins all
 }
 
 
@@ -151,11 +151,11 @@ if [ $(command -v gem) ]; then
 	gemu
 fi
 
-if [$(command -v fisher)]; then
+if [ -f ~/.config/fish/functions/fisher.fish ]; then
   fisheru
 fi
 
-if [ -f ./.tmux/plugins/tpm/bin/update_plugins ]; then
+if [ -f ~/.tmux/plugins/tpm/bin/update_plugins ]; then
   tmuxu
 fi
 
