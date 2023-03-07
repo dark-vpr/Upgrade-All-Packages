@@ -2,13 +2,19 @@
 The best tool to Upgrade all your package, now works with termux.
 
 ## Prerequisites
-- A Unix-like operating system (tested on all Debain based OS)
-- `apt` or `pkg`: Package Manager
-- `flatpak`: a modern package manager
-- `git` should be installed
-- `pip`: Package Manager for Python (Optional)
-- `gem`: Package Manager for Ruby (Optional)
+>**Warning** : A Unix-like operating system (tested on all Debain based OS)
 
+> `apt` or `pkg`: Package Manager
+
+> `git` should be installed
+
+> `flatpak`: a modern package manager (Optional)
+
+> `pip`: Package Manager for Python (Optional)
+
+> `gem`: Package Manager for Ruby (Optional)
+
+> `tpm`: Plugin Manager for Tmux (Optional)
 
 ## Supported Packages
 - `apt` Packages
