@@ -2,6 +2,7 @@
 The best tool to Upgrade all your package, now works with termux.
 
 ## Prerequisites
+Before you start using this tool, make sure you have the following prerequisites:
 >**Warning** : A Unix-like operating system (tested on all Debain based OS)
 
 > `apt` or `pkg`: Package Manager
@@ -45,6 +46,7 @@ cd Upgrade-All-Packages
 ```
 
 ## Usage
+To use this tool, follow the instructions below:
 ### Root:
 ```
 sudo UGpack 
@@ -59,4 +61,4 @@ UGpack
 - `n`: Cancel the upgrade
 
 ## Feedbacks
-If you have any suggestion or comment, please create an issue here. Any feedback is highly appreciated.
+If you have any suggestion or comment, please create an issue [here](https://github.com/darkvpier/Upgrade-All-Packages/issues). Any feedback is highly appreciated.
