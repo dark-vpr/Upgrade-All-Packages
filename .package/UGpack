@@ -57,7 +57,7 @@ pipu() {
 		case $syn in
 		[yY]*)
 			pip list -o
-			pip list -o | awk 'NR==3 {print NR,$1}' | awk '{print $2}'| xargs -n1 pip install -U
+      pip list -o | awk 'NR>=3 {print $1}' | xargs -n1 pip install -U
 			break
 			;;
 		[sS]*)
@@ -71,8 +71,8 @@ pipu() {
 					echo "Aborting....."
 					break
 					;;
-				[yY]*)
-					pip list -o | awk 'NR==3 {print NR,$1}' | awk '{print $2}'| xargs -n1 pip install -U
+				[yY]*) 
+          pip list -o | awk 'NR>=3 {print $1}' | xargs -n1 pip install -U
 					break
 					;;
 				*)
