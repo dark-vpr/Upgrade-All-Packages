@@ -104,7 +104,7 @@ fisheru() {
 	echo
 	echo 'Fisher Upgrade:'
 	echo
-  fisher update
+  fish -c "fisher update"
 }
 tmuxu() {
 	echo
