@@ -175,7 +175,7 @@ if [ -f $HOME/.config/ugpack.conf ]; then
 	while read LINE; do
 		ToolU $LINE
 	done < <(grep -v "^#\|^$" $HOME/.config/ugpack.conf)
-elif [ -f $HOME/.config/UGpack/ugpack.conf]; then
+elif [ -f $HOME/.config/UGpack/ugpack.conf ]; then
 	while read LINE; do
 		ToolU $LINE
 	done < <(grep -v "^#\|^$" $HOME/.config/UGpack/ugpack.conf)
