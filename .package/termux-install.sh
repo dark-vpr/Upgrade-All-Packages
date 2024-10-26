@@ -8,7 +8,7 @@ if [ -e /data/data/com.termux/files/usr/bin/UGpack ]; then
         case $yn in
         [nN]*)
             echo "Aborting....."
-            br
+            break
             ;;
         [yY]*)
             ln -sf "$PWD/.package/UGpack" /data/data/com.termux/files/usr/bin/UGpack
