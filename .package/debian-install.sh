@@ -1,5 +1,5 @@
-#!/data/data/com.termux/files/usr/bin/bash
-if [ -e /data/data/com.termux/files/usr/bin/UGpack ]; then
+#!/bin/bash
+if [ -e /usr/bin/UGpack ]; then
     echo
     echo "UGpack has already been Installed....."
     while true; do
@@ -8,10 +8,10 @@ if [ -e /data/data/com.termux/files/usr/bin/UGpack ]; then
         case $yn in
         [nN]*)
             echo "Aborting....."
-            br
+            break
             ;;
         [yY]*)
-            ln -sf "$PWD/.package/UGpack" /data/data/com.termux/files/usr/bin/UGpack
+            sudo ln -sf "$PWD/.package/UGpack" /usr/bin/UGpack
             echo
             echo "Installation Completed.... (To Run Enter \"UGpack\")"
             break
@@ -22,9 +22,9 @@ if [ -e /data/data/com.termux/files/usr/bin/UGpack ]; then
         esac
     done
 else
-    ln -sf "$PWD/.package/UGpack" /data/data/com.termux/files/usr/bin/UGpack
+    sudo ln -sf "$PWD/.package/UGpack" /usr/bin/UGpack
     echo
-    echo "Installation Completed.... (To Run Enter \"UGpack\")"
+    echo "Installation Completed.... (To Run Enter \"sudo UGpack\")"
 fi
 
 if [ -e "$HOME/.config/UGpack/ugpack.conf" ]; then
@@ -51,6 +51,6 @@ else
     while true; do
         echo
         read -rp "Enter The Path to your Git Package (if none, press ctrl + c): " gp
-        echo "$gp" >>"$HOME/.config/UGpack/ugpack.conf"
+        echo "$gp" >> "$HOME/.config/UGpack/ugpack.conf"
     done
 fi
