@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ -e /bin/UGpack ]; then
+if [ -e /usr/bin/UGpack ]; then
     echo
     echo "UGpack has already been Installed....."
     while true; do
@@ -8,12 +8,12 @@ if [ -e /bin/UGpack ]; then
         case $yn in
         [nN]*)
             echo "Aborting....."
-            break
+            exit 0
             ;;
         [yY]*)
-            sudo ln -sf $PWD/.package/UGpack /bin/UGpack
+            sudo ln -sf $PWD/.package/UGpack /usr/bin/UGpack
             echo
-            echo "Installation Completed.... (To Run Enter \"sudo UGpack\")"
+            echo "Installation Completed.... (To Run Enter \"UGpack\")"
             break
             ;;
         *)
@@ -22,35 +22,35 @@ if [ -e /bin/UGpack ]; then
         esac
     done
 else
-    sudo ln -sf $PWD/.package/UGpack /bin/UGpack
+    sudo ln -sf $PWD/.package/UGpack /usr/bin/UGpack
     echo
     echo "Installation Completed.... (To Run Enter \"sudo UGpack\")"
 fi
 
-if [ -e /etc/UGpack/ ]; then
+if [ -e $HOME/.config/UGpack/ugpack.conf ]; then
     echo
     echo
     echo "Current Git Paths:"
     echo
     while read LINE; do
         echo $LINE
-    done < <(grep -v "^#\|^$" /etc/UGpack/ugpack.conf)
+    done < <(grep -v "^#\|^$" $HOME/.config/UGpack/ugpack.conf)
     echo
     while true; do
         echo
         read -p "Enter the Path to your Git Packages (if none, Press ctrl + c): " gp
-        sudo echo $gp >>/etc/UGpack/ugpack.conf
+        echo $gp >>$HOME/.config/UGpack/ugpack.conf
     done
 else
     echo
-    sudo mkdir /etc/UGpack/
-    sudo touch /etc/UGpack/ugpack.conf
-    sudo chmod 666 /etc/UGpack/ugpack.conf
-    sudo echo "# Add the Path of your Git Packages" >/etc/UGpack/ugpack.conf
-    sudo echo >>/etc/UGpack/ugpack.conf
+    mkdir -p $HOME/.config/UGpack/
+    # touch $HOME/.config/UGpack/ugpack.conf
+    # chmod 664 $HOME/.config/UGpack/ugpack.conf
+    echo "# Add the Path of your Git Packages" >$HOME/.config/UGpack/ugpack.conf
+    echo >>$HOME/.config/UGpack/ugpack.conf
     while true; do
         echo
         read -p "Enter The Path to your Git Package (if none, press ctrl + c): " gp
-        sudo echo $gp >> /etc/UGpack/ugpack.conf
+        echo $gp >> $HOME/.config/UGpack/ugpack.conf
     done
 fi

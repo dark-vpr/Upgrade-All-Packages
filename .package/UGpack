@@ -4,7 +4,7 @@ BOLD="\033[1m"
 YELLOW="\033[0;33m"
 BLUE='\033[1;94m'
 
-pkgu() {
+PkgU() {
 	printf "\n${BLUE}%s${RESET}\n" "Upgrade:"
 	echo
 	pkg upgrade
@@ -17,38 +17,46 @@ pkgu() {
 	apt autoclean
 }
 
-aptu() {
+AptU() {
 	echo 'dpkg:'
 	echo
-	dpkg --configure -a
+	sudo dpkg --configure -a
 	echo
 	echo 'Fix Broken:'
 	echo
-	apt --fix-broken install
+	sudo apt --fix-broken install
 	echo
-	apt update
+	sudo apt update
 	echo
 	echo 'Upgrade:'
 	echo
-	apt upgrade
+	sudo apt full-upgrade
 	echo
 	echo
 	echo 'Auto Remove:'
 	echo
-	apt autoremove --purge
+	sudo apt autoremove --purge
 	echo
-	apt autoclean
+	sudo apt autoclean
 }
 
-flatu() {
+FlatU() {
 	echo
 	echo
 	echo 'Flatpak Upgrade:'
 	echo
-	flatpak update
+	sudo flatpak update
 }
 
-pipu() {
+PipxU() {
+	echo
+	echo
+	echo 'Pipx Upgrade:'
+	echo
+	pipx upgrade-all
+}
+
+PipU() {
 	while true; do
 		echo
 		echo
@@ -57,7 +65,7 @@ pipu() {
 		case $syn in
 		[yY]*)
 			pip list -o
-      pip list -o | awk 'NR>=3 {print $1}' | xargs -n1 pip install -U
+			pip list -o | awk 'NR>=3 {print $1}' | xargs -n1 pip install -U
 			break
 			;;
 		[sS]*)
@@ -71,8 +79,8 @@ pipu() {
 					echo "Aborting....."
 					break
 					;;
-				[yY]*) 
-          pip list -o | awk 'NR>=3 {print $1}' | xargs -n1 pip install -U
+				[yY]*)
+					pip list -o | awk 'NR>=3 {print $1}' | xargs -n1 pip install -U
 					break
 					;;
 				*)
@@ -92,30 +100,30 @@ pipu() {
 		esac
 	done
 }
-gemu() {
+
+GemU() {
 	echo
 	echo
 	echo 'Gem Upgrade:'
 	echo
 	gem update
 }
-fisheru() {
+FisherU() {
 	echo
 	echo
 	echo 'Fisher Upgrade:'
 	echo
-  fish -c "fisher update"
+	fish -c "fisher update"
 }
-tmuxu() {
+TmuxU() {
 	echo
 	echo
 	echo 'Tmux Plugins Upgrade:'
 	echo
-  ~/.tmux/plugins/tpm/bin/update_plugins all
+	~/.tmux/plugins/tpm/bin/update_plugins all
 }
 
-
-toolu() {
+ToolU() {
 	cd $1
 	echo
 	printf "\n${BLUE}%s${RESET}\n" "Updating GitHub Packages("${PWD##*/}"):"
@@ -134,38 +142,41 @@ toolu() {
 }
 
 if [ $(command -v pkg) ]; then
-	pkgu
+	PkgU
 elif [ $(command -v apt) ]; then
-	aptu
+	AptU
 fi
 
 if [ $(command -v flatpak) ]; then
-	flatu
+	FlatU
 fi
 
+if [ $(command -v pipx) ]; then
+	PipxU
+fi
 if [ $(command -v pip) ]; then
-	pipu
+	PipU
 fi
 
-if [ $(command -v gem) ]; then
-	gemu
-fi
+# if [ $(command -v gem) ]; then
+# 	GemU
+# fi
 
 if [ -f ~/.config/fish/functions/fisher.fish ]; then
-  fisheru
+	FisherU
 fi
 
 if [ -f ~/.tmux/plugins/tpm/bin/update_plugins ]; then
-  tmuxu
+	TmuxU
 fi
 
 #GIT PACKAGES
-if [ -f /etc/UGpack/ugpack.conf ]; then
+if [ -f $HOME/.config/ugpack.conf ]; then
 	while read LINE; do
-		toolu $LINE
-	done < <(grep -v "^#\|^$" /etc/UGpack/ugpack.conf)
-elif [ -f /data/data/com.termux/files/usr/etc/UGpack/ugpack.conf ]; then
+		ToolU $LINE
+	done < <(grep -v "^#\|^$" $HOME/.config/ugpack.conf)
+elif [ -f $HOME/.config/UGpack/ugpack.conf]; then
 	while read LINE; do
-		toolu $LINE
-	done < <(grep -v "^#\|^$" /data/data/com.termux/files/usr/etc/UGpack/ugpack.conf)
+		ToolU $LINE
+	done < <(grep -v "^#\|^$" $HOME/.config/UGpack/ugpack.conf)
 fi
