@@ -18,6 +18,11 @@ Before you start using this tool, make sure you have the following prerequisites
 
 > `tpm`: Plugin Manager for Tmux (Optional)
 
+> `pipx`: Package Manager for Python applications (Optional)
+
+> `uv`: Universal package manager (Optional)
+
+
 ## Supported Packages
 - `apt` Packages
 - `pkg` Packages
@@ -27,6 +32,8 @@ Before you start using this tool, make sure you have the following prerequisites
 - `Git` Packages
 - `Fisher` Packages (Fish Shell Plugins)
 - `Tmux Plugins` Packages
+- `pipx` Packages
+- `uv` Packages
 
 ## Installation
 ### On Debian-based GNU/Linux distributions
