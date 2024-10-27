@@ -56,6 +56,55 @@ PipxU() {
 	pipx upgrade-all
 }
 
+UvU() {
+	echo
+	echo
+	echo 'Upgrading uv tools:'
+	echo
+	uv tool upgrade --all
+	while true; do
+		echo
+		echo
+		read -p "Continue to Upgrade Python Packages..... [s|Y|n]: " syn
+		syn=${syn:-'y'}
+		case $syn in
+		[yY]*)
+			sudo uv pip freeze --system | cut -d '=' -f 1 | xargs sudo uv pip install --break-system-packages --system -U
+			break
+			;;
+		[sS]*)
+			pip list -o
+			while true; do
+				echo
+				read -p "Upgrade now..... [Y|n]: " yn
+				yn=${yn:-'y'}
+				case $yn in
+				[nN]*)
+					echo "Aborting....."
+					break
+					;;
+				[yY]*)
+					sudo uv pip freeze --system | cut -d '=' -f 1 | xargs sudo uv pip install --break-system-packages --system -U
+					break
+					;;
+				*)
+					echo 'Wrong Choice.....'
+					;;
+				esac
+			done
+			break
+			;;
+		[nN]*)
+			echo "Aborting....."
+			break
+			;;
+		*)
+			echo 'Wrong Choice.....'
+			;;
+		esac
+	done
+}
+
 PipU() {
 	while true; do
 		echo
@@ -151,11 +200,14 @@ if [ $(command -v flatpak) ]; then
 	FlatU
 fi
 
+if [ $(command -v uv) ] && [ "$OSTYPE" != "linux-android" ]; then
+	UvU
+elif [ $(command -v pip) ]; then
+	PipU
+fi
+
 if [ $(command -v pipx) ]; then
 	PipxU
-fi
-if [ $(command -v pip) ]; then
-	PipU
 fi
 
 # if [ $(command -v gem) ]; then
