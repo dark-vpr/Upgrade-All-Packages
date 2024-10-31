@@ -10,11 +10,39 @@ PkgU() {
 	pkg upgrade
 	echo
 	echo
-	echo 'Auto Remove:'
+	echo 'Auto Purge:'
 	echo
 	apt autoremove --purge
 	echo
 	apt autoclean
+}
+
+NalaU() {
+	if [ $OSTYPE = "linux-android" ]; then
+		echo
+		echo
+		echo 'Nala Upgrade:'
+		echo
+		nala full-upgrade
+		echo
+		echo
+		echo 'Auto Purge:'
+		echo
+		nala autopurge
+		echo
+		nala clean
+	else
+		printf "\n${BLUE}%s${RESET}\n" "Nala Upgrade:"
+		echo
+		sudo nala full-upgrade
+		echo
+		echo
+		echo 'Auto Purge:'
+		echo
+		sudo nala autopurge
+		echo
+		sudo nala clean
+	fi
 }
 
 AptU() {
@@ -33,7 +61,7 @@ AptU() {
 	sudo apt full-upgrade
 	echo
 	echo
-	echo 'Auto Remove:'
+	echo 'Auto Purge:'
 	echo
 	sudo apt autoremove --purge
 	echo
@@ -157,6 +185,7 @@ GemU() {
 	echo
 	gem update
 }
+
 FisherU() {
 	echo
 	echo
@@ -190,7 +219,9 @@ ToolU() {
 	done
 }
 
-if [ $(command -v pkg) ]; then
+if [ $(command -v nala) ]; then
+	NalaU
+elif [ $(command -v pkg) ]; then
 	PkgU
 elif [ $(command -v apt) ]; then
 	AptU
