@@ -18,7 +18,7 @@ PkgU() {
 }
 
 NalaU() {
-	if [ $OSTYPE = "linux-android" ]; then
+	if [ "$OSTYPE" = "linux-android" ]; then
 		echo
 		echo
 		echo 'Nala Upgrade:'
@@ -93,7 +93,7 @@ UvU() {
 	while true; do
 		echo
 		echo
-		read -p "Continue to Upgrade Python Packages..... [s|Y|n]: " syn
+		read -rp "Continue to Upgrade Python Packages [THE UV WAY]..... [s|Y|n]: " syn
 		syn=${syn:-'y'}
 		case $syn in
 		[yY]*)
@@ -104,7 +104,7 @@ UvU() {
 			pip list -o
 			while true; do
 				echo
-				read -p "Upgrade now..... [Y|n]: " yn
+				read -rp "Upgrade now..... [Y|n]: " yn
 				yn=${yn:-'y'}
 				case $yn in
 				[nN]*)
@@ -137,7 +137,7 @@ PipU() {
 	while true; do
 		echo
 		echo
-		read -p "Continue to Upgrade Python Packages..... [s|Y|n]: " syn
+		read -rp "Continue to Upgrade Python Packages..... [s|Y|n]: " syn
 		syn=${syn:-'y'}
 		case $syn in
 		[yY]*)
@@ -149,7 +149,7 @@ PipU() {
 			pip list -o
 			while true; do
 				echo
-				read -p "Upgrade now..... [Y|n]: " yn
+				read -rp "Upgrade now..... [Y|n]: " yn
 				yn=${yn:-'y'}
 				case $yn in
 				[nN]*)
@@ -178,6 +178,26 @@ PipU() {
 	done
 }
 
+RustupU() {
+	echo
+	echo
+	echo 'Rustup Upgrade:'
+	echo
+	rustup update
+}
+
+CargoU() {
+	echo
+	echo
+	echo 'Cargo Upgrade:'
+	echo
+	if [ "$(command -v cargo-install-update)" ]; then
+		cargo install-update --all
+	else
+		cargo install --list | grep ":" | cut -d " " -f1 | xargs cargo install
+	fi
+}
+
 GemU() {
 	echo
 	echo
@@ -202,9 +222,9 @@ TmuxU() {
 }
 
 ToolU() {
-	cd $1
+	cd "$1" || return
 	echo
-	printf "\n${BLUE}%s${RESET}\n" "Updating GitHub Packages("${PWD##*/}"):"
+	printf "\n${BLUE}%s${RESET}\n" "Updating GitHub Packages(\"${PWD##*/}\"):"
 	if [ -d ".git" ]; then
 		echo
 		printf "${YELLOW}${BOLD}%s${RESET}\n" "${PWD##*/}"
@@ -219,29 +239,34 @@ ToolU() {
 	done
 }
 
-if [ $(command -v nala) ]; then
+if [ "$(command -v nala)" ]; then
 	NalaU
-elif [ $(command -v pkg) ]; then
+elif [ "$(command -v pkg)" ]; then
 	PkgU
-elif [ $(command -v apt) ]; then
+elif [ "$(command -v apt)" ]; then
 	AptU
 fi
 
-if [ $(command -v flatpak) ]; then
+if [ "$(command -v flatpak)" ]; then
 	FlatU
 fi
 
-if [ $(command -v uv) ] && [ "$OSTYPE" != "linux-android" ]; then
+if [ "$(command -v uv)" ] && [ "$OSTYPE" != "linux-android" ]; then
 	UvU
-elif [ $(command -v pip) ]; then
+elif [ "$(command -v pip)" ]; then
 	PipU
 fi
 
-if [ $(command -v pipx) ]; then
+if [ "$(command -v pipx)" ]; then
 	PipxU
 fi
 
-# if [ $(command -v gem) ]; then
+if [ "$(command -v rustup)" ]; then
+	RustupU
+	CargoU
+fi
+
+# if [ "$(command -v gem)" ]; then
 # 	GemU
 # fi
 
@@ -254,12 +279,12 @@ if [ -f ~/.tmux/plugins/tpm/bin/update_plugins ]; then
 fi
 
 #GIT PACKAGES
-if [ -f $HOME/.config/ugpack.conf ]; then
-	while read LINE; do
-		ToolU $LINE
-	done < <(grep -v "^#\|^$" $HOME/.config/ugpack.conf)
-elif [ -f $HOME/.config/UGpack/ugpack.conf ]; then
-	while read LINE; do
-		ToolU $LINE
-	done < <(grep -v "^#\|^$" $HOME/.config/UGpack/ugpack.conf)
+if [ -f "$HOME"/.config/ugpack.conf ]; then
+	while read -r LINE; do
+		ToolU "$LINE"
+	done < <(grep -v "^#\|^$" "$HOME"/.config/ugpack.conf)
+elif [ -f "$HOME"/.config/UGpack/ugpack.conf ]; then
+	while read -r LINE; do
+		ToolU "$LINE"
+	done < <(grep -v "^#\|^$" "$HOME"/.config/UGpack/ugpack.conf)
 fi
