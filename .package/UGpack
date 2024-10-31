@@ -198,6 +198,15 @@ CargoU() {
 	fi
 }
 
+PdmU() {
+	echo
+	echo
+	echo 'PDM Upgrade:'
+	echo
+	pdm update --self
+	pdm update
+}
+
 GemU() {
 	echo
 	echo
@@ -264,6 +273,10 @@ fi
 if [ "$(command -v rustup)" ]; then
 	RustupU
 	CargoU
+fi
+
+if [ "$(command -v pdm)" ]; then
+	PdmU
 fi
 
 # if [ "$(command -v gem)" ]; then
