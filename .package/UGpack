@@ -12,9 +12,9 @@ PkgU() {
 	echo
 	echo 'Auto Purge:'
 	echo
-	apt autoremove --purge
+	apt autopurge
 	echo
-	apt autoclean
+	pkg autoclean
 }
 
 NalaU() {
@@ -63,7 +63,7 @@ AptU() {
 	echo
 	echo 'Auto Purge:'
 	echo
-	sudo apt autoremove --purge
+	sudo apt autopurge
 	echo
 	sudo apt autoclean
 }
