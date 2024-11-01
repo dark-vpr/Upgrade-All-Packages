@@ -35,19 +35,20 @@ Before you start using this tool, make sure you have the following prerequisites
 - [`pdm`](https://pdm.fming.dev/): Python Development Master
 - [`rustup`](https://rustup.rs/): Rust toolchain installer
 - [`cargo`](https://doc.rust-lang.org/cargo/): Rust package manager
+- [`npm`](https://www.npmjs.com/): Node Package Manager
 
 ### 🛠️ Other Tools
 
 - [`git`](https://git-scm.com/): Should be Installed
 - [`tpm`](https://github.com/tmux-plugins/tpm): Plugin Manager for Tmux
 - [`fisher`](https://github.com/jorgebucaran/fisher): Plugin Manager for Fish Shell
+- [`code`](https://code.visualstudio.com/): Visual Studio Code
 
 ## ⚙️ Installation
 
 ### 🐧 On Debian-based GNU/Linux distributions
 
-**Non-Root Users, please remove the command _sudo_ from the beginning**
-
+<!-- **Non-Root Users, please remove the command _sudo_ from the beginning** -->
 ```bash
 sudo apt install findutils git -y
 git clone https://github.com/dark-vpr/Upgrade-All-Packages.git

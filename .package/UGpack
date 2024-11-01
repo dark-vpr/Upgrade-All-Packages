@@ -133,6 +133,15 @@ UvU() {
 	done
 }
 
+PdmU() {
+	echo
+	echo
+	echo 'PDM Upgrade:'
+	echo
+	pdm update --self
+	pdm update
+}
+
 PipU() {
 	while true; do
 		echo
@@ -198,15 +207,6 @@ CargoU() {
 	fi
 }
 
-PdmU() {
-	echo
-	echo
-	echo 'PDM Upgrade:'
-	echo
-	pdm update --self
-	pdm update
-}
-
 GemU() {
 	echo
 	echo
@@ -230,12 +230,34 @@ TmuxU() {
 	~/.tmux/plugins/tpm/bin/update_plugins all
 }
 
+CodeU() {
+	echo
+	echo
+	echo "VSCode Extensions Upgrade:"
+	echo
+	code --update-extensions
+}
+
+NpmU() {
+	echo
+	echo
+	echo 'Npm Upgrade:'
+	echo
+	if [ "$OSTYPE" = "linux-android" ]; then
+		npm update
+		npm update -g
+	else
+		sudo npm update
+		sudo npm update -g
+	fi			
+}
+
 ToolU() {
 	cd "$1" || return
 	echo
 	printf "\n${BLUE}%s${RESET}\n" "Updating GitHub Packages(\"${PWD##*/}\"):"
 	if [ -d ".git" ]; then
-		echo
+		echo 
 		printf "${YELLOW}${BOLD}%s${RESET}\n" "${PWD##*/}"
 		git pull
 	fi
@@ -285,6 +307,14 @@ fi
 
 if [ -f ~/.config/fish/functions/fisher.fish ]; then
 	FisherU
+fi
+
+if [ "$(command -v code)" ]; then
+	CodeU
+fi
+
+if [ "$(command -v npm)" ]; then
+	NpmU
 fi
 
 if [ -f ~/.tmux/plugins/tpm/bin/update_plugins ]; then
