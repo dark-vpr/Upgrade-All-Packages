@@ -32,7 +32,7 @@ if [ -e "$HOME/.config/UGpack/ugpack.conf" ]; then
     echo
     echo "Current Git Paths:"
     echo
-    while read LINE; do
+    while read -r LINE; do
         echo "$LINE"
     done < <(grep -v "^#\|^$" "$HOME/.config/UGpack/ugpack.conf")
     echo

@@ -241,15 +241,26 @@ CodeU() {
 NpmU() {
 	echo
 	echo
-	echo 'Npm Upgrade:'
+	echo 'NPM Upgrade:'
 	echo
 	if [ "$OSTYPE" = "linux-android" ]; then
-		npm update
 		npm update -g
 	else
-		sudo npm update
 		sudo npm update -g
-	fi			
+	fi
+}
+
+PnpmU() {
+	echo
+	echo
+	echo 'PNPM Upgrade:'
+	echo
+	if [ "$OSTYPE" = "linux-android" ]; then
+		pnpm update -g
+	else
+		pnpm update -g
+		sudo pnpm update -g
+	fi
 }
 
 ToolU() {
@@ -257,7 +268,7 @@ ToolU() {
 	echo
 	printf "\n${BLUE}%s${RESET}\n" "Updating GitHub Packages(\"${PWD##*/}\"):"
 	if [ -d ".git" ]; then
-		echo 
+		echo
 		printf "${YELLOW}${BOLD}%s${RESET}\n" "${PWD##*/}"
 		git pull
 	fi
@@ -270,6 +281,7 @@ ToolU() {
 	done
 }
 
+#SYSTEM:
 if [ "$(command -v nala)" ]; then
 	NalaU
 elif [ "$(command -v pkg)" ]; then
@@ -282,6 +294,7 @@ if [ "$(command -v flatpak)" ]; then
 	FlatU
 fi
 
+#PYTHON:
 if [ "$(command -v uv)" ] && [ "$OSTYPE" != "linux-android" ]; then
 	UvU
 elif [ "$(command -v pip)" ]; then
@@ -292,31 +305,40 @@ if [ "$(command -v pipx)" ]; then
 	PipxU
 fi
 
+if [ "$(command -v pdm)" ]; then
+	PdmU
+fi
+
+#RUST:
 if [ "$(command -v rustup)" ]; then
 	RustupU
 	CargoU
-fi
-
-if [ "$(command -v pdm)" ]; then
-	PdmU
 fi
 
 # if [ "$(command -v gem)" ]; then
 # 	GemU
 # fi
 
+#FISH:
 if [ -f ~/.config/fish/functions/fisher.fish ]; then
 	FisherU
 fi
 
+#VSCODE:
 if [ "$(command -v code)" ]; then
 	CodeU
 fi
 
+#NODE:
 if [ "$(command -v npm)" ]; then
 	NpmU
 fi
 
+if [ "$(command -v pnpm)" ]; then
+	PnpmU
+fi
+
+#TMUX:
 if [ -f ~/.tmux/plugins/tpm/bin/update_plugins ]; then
 	TmuxU
 fi

@@ -15,9 +15,9 @@ Before you start using this tool, make sure you have the following prerequisites
 
 - **`apt` or `pkg`**: Package Manager
 - **`git`**: Should be Installed
-- **`pip`**: Package Manager for Python (Optional)
+- **`pip`**: Package Manager for Python (Optional, but if installed, `uv` is recommended)
+- **`uv`**: Extremely fast Python package and project manager (Recommended if `pip` is installed)
 - **`pipx`**: Package Manager for Python applications (Optional)
-- **`uv`**: Extremely fast Python package and project manager (Optional)
 
 ## 📚 Supported Packages
 
@@ -36,6 +36,7 @@ Before you start using this tool, make sure you have the following prerequisites
 - [`rustup`](https://rustup.rs/): Rust toolchain installer
 - [`cargo`](https://doc.rust-lang.org/cargo/): Rust package manager
 - [`npm`](https://www.npmjs.com/): Node Package Manager
+- [`pnpm`](https://pnpm.io/): Fast, disk space efficient package manager
 
 ### 🛠️ Other Tools
 
