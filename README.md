@@ -44,6 +44,7 @@ Before you start using this tool, make sure you have the following prerequisites
 - [`tpm`](https://github.com/tmux-plugins/tpm): Plugin Manager for Tmux
 - [`fisher`](https://github.com/jorgebucaran/fisher): Plugin Manager for Fish Shell
 - [`code`](https://code.visualstudio.com/): Visual Studio Code
+- [`docker`](https://www.docker.com/): Containerization Platform
 
 ## ⚙️ Installation
 

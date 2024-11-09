@@ -20,6 +20,9 @@ PkgU() {
 NalaU() {
 	if [ "$OSTYPE" = "linux-android" ]; then
 		echo
+		echo 'dpkg:'
+		echo
+		dpkg --configure -a
 		echo
 		echo 'Nala Upgrade:'
 		echo
@@ -32,6 +35,11 @@ NalaU() {
 		echo
 		nala clean
 	else
+		echo
+		echo 'dpkg:'
+		echo
+		sudo dpkg --configure -a
+		echo
 		printf "\n${BLUE}%s${RESET}\n" "Nala Upgrade:"
 		echo
 		sudo nala full-upgrade
@@ -201,9 +209,32 @@ CargoU() {
 	echo 'Cargo Upgrade:'
 	echo
 	if [ "$(command -v cargo-install-update)" ]; then
-		cargo install-update --all
+		cargo install-update --all -g
+		if [ "$(command -v cargo-cache)" ]; then
+			cargo cache -a
+		else
+			echo
+			echo
+			read -rp "Install cargo-cache..... [Y|n]: " yn
+			yn=${yn:-'y'}
+			if [ "$yn" = "y" ]; then
+				cargo install cargo-cache
+				cargo cache -a
+			fi
+		fi
 	else
 		cargo install --list | grep ":" | cut -d " " -f1 | xargs cargo install
+		if [ "$(command -v cargo-cache)" ]; then
+			cargo cache -a
+		else
+			echo
+			read -rp "Install cargo-cache..... [Y|n]: " yn
+			yn=${yn:-'y'}
+			if [ "$yn" = "y" ]; then
+				cargo install cargo-cache
+				cargo cache -a
+			fi
+		fi
 	fi
 }
 
@@ -263,6 +294,19 @@ PnpmU() {
 	fi
 }
 
+DockerU() {
+	echo
+	echo
+	echo 'Docker Upgrade:'
+	echo
+	images=$(sudo docker images -f "dangling=false" --format "{{.Repository}}:{{.Tag}}")
+	if [ -n "$images" ]; then
+		echo "$images" | xargs -L1 sudo docker pull
+	else
+		echo "No images to update"
+	fi
+}
+
 ToolU() {
 	cd "$1" || return
 	echo
@@ -294,6 +338,11 @@ if [ "$(command -v flatpak)" ]; then
 	FlatU
 fi
 
+#FISH:
+if [ -f ~/.config/fish/functions/fisher.fish ]; then
+	FisherU
+fi
+
 #PYTHON:
 if [ "$(command -v uv)" ] && [ "$OSTYPE" != "linux-android" ]; then
 	UvU
@@ -319,11 +368,6 @@ fi
 # 	GemU
 # fi
 
-#FISH:
-if [ -f ~/.config/fish/functions/fisher.fish ]; then
-	FisherU
-fi
-
 #VSCODE:
 if [ "$(command -v code)" ]; then
 	CodeU
@@ -336,6 +380,11 @@ fi
 
 if [ "$(command -v pnpm)" ]; then
 	PnpmU
+fi
+
+#DOCKER:
+if [ "$(command -v docker)" ]; then
+	DockerU
 fi
 
 #TMUX:

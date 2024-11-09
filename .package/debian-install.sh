@@ -24,7 +24,7 @@ if [ -e /usr/bin/UGpack ]; then
 else
     sudo ln -sf "$PWD/.package/UGpack" /usr/bin/UGpack
     echo
-    echo "Installation Completed.... (To Run Enter \"sudo UGpack\")"
+    echo "Installation Completed.... (To Run Enter \"UGpack\")"
 fi
 
 if [ -e "$HOME/.config/UGpack/ugpack.conf" ]; then
