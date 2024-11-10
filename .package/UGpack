@@ -105,11 +105,20 @@ UvU() {
 		syn=${syn:-'y'}
 		case $syn in
 		[yY]*)
-			sudo uv pip freeze --system | cut -d '=' -f 1 | xargs sudo uv pip install --break-system-packages --system -U
+			UVPackageS=$(sudo uv pip list --outdated --system | awk 'NR>=3 {print $1}')
+			if [ -n "$UVPackageS" ]; then
+				echo
+				echo "$UVPackageS" | xargs -n1 sudo uv pip install --break-system-packages --system -U "$UVPackageS"
+			else
+				echo
+				echo "No Python Packages to Upgrade....."
+			fi
+			# sudo uv pip freeze --system | cut -d '=' -f 1 | xargs sudo uv pip install --break-system-packages --system -U
 			break
 			;;
 		[sS]*)
-			pip list -o
+			UVPackageS=$(sudo uv pip list --outdated --system)
+			echo "$UVPackageS"
 			while true; do
 				echo
 				read -rp "Upgrade now..... [Y|n]: " yn
@@ -120,7 +129,15 @@ UvU() {
 					break
 					;;
 				[yY]*)
-					sudo uv pip freeze --system | cut -d '=' -f 1 | xargs sudo uv pip install --break-system-packages --system -U
+					if [ -n "$UVPackageS" ]; then
+						echo
+						echo "Upgrading Python Packages....."
+						echo "$UVPackageS" | awk 'NR>=3 {print $1}' | xargs -n1 sudo uv pip install --break-system-packages --system -U "$UVPackageS"
+					else
+						echo
+						echo "No Python Packages to Upgrade....."
+					fi
+					# sudo uv pip freeze --system | cut -d '=' -f 1 | xargs sudo uv pip install --break-system-packages --system -U
 					break
 					;;
 				*)
@@ -158,12 +175,14 @@ PipU() {
 		syn=${syn:-'y'}
 		case $syn in
 		[yY]*)
-			pip list -o
-			pip list -o | awk 'NR>=3 {print $1}' | xargs -n1 pip install -U
+			PIPPackageS=$(pip list -o)
+			echo "$PIPPackageS"
+			echo "$PIPPackageS" | awk 'NR>=3 {print $1}' | xargs -n1 pip install -U
 			break
 			;;
 		[sS]*)
-			pip list -o
+			PIPPackageS=$(pip list -o)
+			echo "$PIPPackageS"
 			while true; do
 				echo
 				read -rp "Upgrade now..... [Y|n]: " yn
@@ -174,7 +193,7 @@ PipU() {
 					break
 					;;
 				[yY]*)
-					pip list -o | awk 'NR>=3 {print $1}' | xargs -n1 pip install -U
+					echo "$PIPPackageS" | awk 'NR>=3 {print $1}' | xargs -n1 pip install -U
 					break
 					;;
 				*)
