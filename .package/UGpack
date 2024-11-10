@@ -108,7 +108,7 @@ UvU() {
 			UVPackageS=$(sudo uv pip list --outdated --system | awk 'NR>=3 {print $1}')
 			if [ -n "$UVPackageS" ]; then
 				echo
-				echo "$UVPackageS" | xargs -n1 sudo uv pip install --break-system-packages --system -U "$UVPackageS"
+				echo "$UVPackageS" | xargs -l1 sudo uv pip install --break-system-packages --system -U
 			else
 				echo
 				echo "No Python Packages to Upgrade....."
@@ -132,7 +132,7 @@ UvU() {
 					if [ -n "$UVPackageS" ]; then
 						echo
 						echo "Upgrading Python Packages....."
-						echo "$UVPackageS" | awk 'NR>=3 {print $1}' | xargs -n1 sudo uv pip install --break-system-packages --system -U "$UVPackageS"
+						echo "$UVPackageS" | awk 'NR>=3 {print $1}' | xargs -l1 sudo uv pip install --break-system-packages --system -U
 					else
 						echo
 						echo "No Python Packages to Upgrade....."
