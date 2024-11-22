@@ -156,6 +156,9 @@ UvU() {
 			;;
 		esac
 	done
+	echo
+	uv cache prune
+	sudo uv cache prune
 }
 
 PdmU() {
@@ -212,6 +215,8 @@ PipU() {
 			;;
 		esac
 	done
+	echo
+	pip cache purge
 }
 
 RustupU() {
