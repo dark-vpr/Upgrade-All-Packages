@@ -158,7 +158,9 @@ UvU() {
 	done
 	echo
 	uv cache prune
+	pip cache purge
 	sudo uv cache prune
+	sudo pip cache purge
 }
 
 PdmU() {
