@@ -93,18 +93,13 @@ PipxU() {
 }
 
 UvU() {
-	echo
-	echo
-	echo 'Upgrading uv tools:'
-	echo
-	uv tool upgrade --all
 	UvpipU() {
 		while true; do
 			echo
 			echo
 			read -rp "Continue to Upgrade Python Packages [THE UV WAY]..... [s|Y|n]: " syn
 			syn=${syn:-'y'}
-			case $syn in
+			case "$syn" in
 			[yY]*)
 				UVPackageS=$(uv pip list --outdated --system | awk 'NR>=3 {print $1}')
 				if [ -n "$UVPackageS" ]; then
@@ -124,7 +119,7 @@ UvU() {
 					echo
 					read -rp "Upgrade now..... [Y|n]: " yn
 					yn=${yn:-'y'}
-					case $yn in
+					case "$yn" in
 					[nN]*)
 						echo "Aborting....."
 						break
@@ -161,6 +156,11 @@ UvU() {
 		uv cache prune
 		pip cache purge
 	}
+	echo
+	echo
+	echo 'Upgrading uv tools:'
+	echo
+	uv tool upgrade --all
 	if [ "$OSTYPE" = "linux-android" ]; then
 		UvpipU
 	else
@@ -168,7 +168,6 @@ UvU() {
 		uv cache prune
 		pip cache purge
 	fi
-
 }
 
 PdmU() {
@@ -186,7 +185,7 @@ PipU() {
 		echo
 		read -rp "Continue to Upgrade Python Packages..... [s|Y|n]: " syn
 		syn=${syn:-'y'}
-		case $syn in
+		case "$syn" in
 		[yY]*)
 			PIPPackageS=$(pip list -o)
 			echo "$PIPPackageS"
@@ -200,7 +199,7 @@ PipU() {
 				echo
 				read -rp "Upgrade now..... [Y|n]: " yn
 				yn=${yn:-'y'}
-				case $yn in
+				case "$yn" in
 				[nN]*)
 					echo "Aborting....."
 					break
@@ -251,7 +250,7 @@ CargoU() {
 			echo
 			read -rp "Install cargo-cache..... [Y|n]: " yn
 			yn=${yn:-'y'}
-			if [ "$yn" = "y" ]; then
+			if [[ "$yn" =~ ^[yY] ]]; then
 				cargo install cargo-cache
 				cargo cache -a
 			fi
@@ -264,7 +263,7 @@ CargoU() {
 			echo
 			read -rp "Install cargo-cache..... [Y|n]: " yn
 			yn=${yn:-'y'}
-			if [ "$yn" = "y" ]; then
+			if [[ "$yn" =~ ^[yY] ]]; then
 				cargo install cargo-cache
 				cargo cache -a
 			fi
@@ -374,7 +373,11 @@ fi
 [ -f ~/.config/fish/functions/fisher.fish ] && FisherU
 
 #PYTHON:
-[ "$(command -v uv)" ] && UvU || [ "$(command -v pip)" ] && PipU
+if [ "$(command -v uv)" ]; then
+	UvU
+elif [ "$(command -v pip)" ]; then
+	PipU
+fi
 [ "$(command -v pipx)" ] && PipxU
 [ "$(command -v pdm)" ] && PdmU
 
