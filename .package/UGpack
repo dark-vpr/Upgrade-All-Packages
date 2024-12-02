@@ -98,69 +98,77 @@ UvU() {
 	echo 'Upgrading uv tools:'
 	echo
 	uv tool upgrade --all
-	while true; do
+	UvpipU() {
+		while true; do
+			echo
+			echo
+			read -rp "Continue to Upgrade Python Packages [THE UV WAY]..... [s|Y|n]: " syn
+			syn=${syn:-'y'}
+			case $syn in
+			[yY]*)
+				UVPackageS=$(uv pip list --outdated --system | awk 'NR>=3 {print $1}')
+				if [ -n "$UVPackageS" ]; then
+					echo
+					echo "$UVPackageS" | xargs -l1 uv pip install --break-system-packages --system -U
+				else
+					echo
+					echo "No Python Packages to Upgrade....."
+				fi
+				# uv pip freeze --system | cut -d '=' -f 1 | xargs uv pip install --break-system-packages --system -U
+				break
+				;;
+			[sS]*)
+				UVPackageS=$(uv pip list --outdated --system)
+				echo "$UVPackageS"
+				while true; do
+					echo
+					read -rp "Upgrade now..... [Y|n]: " yn
+					yn=${yn:-'y'}
+					case $yn in
+					[nN]*)
+						echo "Aborting....."
+						break
+						;;
+					[yY]*)
+						if [ -n "$UVPackageS" ]; then
+							echo
+							echo "Upgrading Python Packages....."
+							echo "$UVPackageS" | awk 'NR>=3 {print $1}' | xargs -l1 uv pip install --break-system-packages --system -U
+						else
+							echo
+							echo "No Python Packages to Upgrade....."
+						fi
+						# uv pip freeze --system | cut -d '=' -f 1 | xargs uv pip install --break-system-packages --system -U
+						break
+						;;
+					*)
+						echo 'Wrong Choice.....'
+						;;
+					esac
+				done
+				break
+				;;
+			[nN]*)
+				echo "Aborting....."
+				break
+				;;
+			*)
+				echo 'Wrong Choice.....'
+				;;
+			esac
+		done
 		echo
-		echo
-		read -rp "Continue to Upgrade Python Packages [THE UV WAY]..... [s|Y|n]: " syn
-		syn=${syn:-'y'}
-		case $syn in
-		[yY]*)
-			UVPackageS=$(sudo uv pip list --outdated --system | awk 'NR>=3 {print $1}')
-			if [ -n "$UVPackageS" ]; then
-				echo
-				echo "$UVPackageS" | xargs -l1 sudo uv pip install --break-system-packages --system -U
-			else
-				echo
-				echo "No Python Packages to Upgrade....."
-			fi
-			# sudo uv pip freeze --system | cut -d '=' -f 1 | xargs sudo uv pip install --break-system-packages --system -U
-			break
-			;;
-		[sS]*)
-			UVPackageS=$(sudo uv pip list --outdated --system)
-			echo "$UVPackageS"
-			while true; do
-				echo
-				read -rp "Upgrade now..... [Y|n]: " yn
-				yn=${yn:-'y'}
-				case $yn in
-				[nN]*)
-					echo "Aborting....."
-					break
-					;;
-				[yY]*)
-					if [ -n "$UVPackageS" ]; then
-						echo
-						echo "Upgrading Python Packages....."
-						echo "$UVPackageS" | awk 'NR>=3 {print $1}' | xargs -l1 sudo uv pip install --break-system-packages --system -U
-					else
-						echo
-						echo "No Python Packages to Upgrade....."
-					fi
-					# sudo uv pip freeze --system | cut -d '=' -f 1 | xargs sudo uv pip install --break-system-packages --system -U
-					break
-					;;
-				*)
-					echo 'Wrong Choice.....'
-					;;
-				esac
-			done
-			break
-			;;
-		[nN]*)
-			echo "Aborting....."
-			break
-			;;
-		*)
-			echo 'Wrong Choice.....'
-			;;
-		esac
-	done
-	echo
-	uv cache prune
-	pip cache purge
-	sudo uv cache prune
-	sudo pip cache purge
+		uv cache prune
+		pip cache purge
+	}
+	if [ "$OSTYPE" = "linux-android" ]; then
+		UvpipU
+	else
+		sudo bash -c "$(declare -f UvpipU); UvpipU"
+		uv cache prune
+		pip cache purge
+	fi
+
 }
 
 PdmU() {
@@ -360,63 +368,33 @@ elif [ "$(command -v apt)" ]; then
 	AptU
 fi
 
-if [ "$(command -v flatpak)" ]; then
-	FlatU
-fi
+[ "$(command -v flatpak)" ] && FlatU
 
 #FISH:
-if [ -f ~/.config/fish/functions/fisher.fish ]; then
-	FisherU
-fi
+[ -f ~/.config/fish/functions/fisher.fish ] && FisherU
 
 #PYTHON:
-if [ "$(command -v uv)" ] && [ "$OSTYPE" != "linux-android" ]; then
-	UvU
-elif [ "$(command -v pip)" ]; then
-	PipU
-fi
-
-if [ "$(command -v pipx)" ]; then
-	PipxU
-fi
-
-if [ "$(command -v pdm)" ]; then
-	PdmU
-fi
+[ "$(command -v uv)" ] && UvU || [ "$(command -v pip)" ] && PipU
+[ "$(command -v pipx)" ] && PipxU
+[ "$(command -v pdm)" ] && PdmU
 
 #RUST:
-if [ "$(command -v rustup)" ]; then
-	RustupU
-	CargoU
-fi
+[ "$(command -v rustup)" ] && RustupU && CargoU
 
-# if [ "$(command -v gem)" ]; then
-# 	GemU
-# fi
+# [ "$(command -v gem)" ] && GemU
 
 #VSCODE:
-if [ "$(command -v code)" ]; then
-	CodeU
-fi
+[ "$(command -v code)" ] && CodeU
 
 #NODE:
-if [ "$(command -v npm)" ]; then
-	NpmU
-fi
-
-if [ "$(command -v pnpm)" ]; then
-	PnpmU
-fi
+[ "$(command -v npm)" ] && NpmU
+[ "$(command -v pnpm)" ] && PnpmU
 
 #DOCKER:
-if [ "$(command -v docker)" ]; then
-	DockerU
-fi
+[ "$(command -v docker)" ] && DockerU
 
 #TMUX:
-if [ -f ~/.tmux/plugins/tpm/bin/update_plugins ]; then
-	TmuxU
-fi
+[ -f ~/.tmux/plugins/tpm/bin/update_plugins ] && TmuxU
 
 #GIT PACKAGES
 if [ -f "$HOME"/.config/ugpack.conf ]; then
