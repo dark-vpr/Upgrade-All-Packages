@@ -92,19 +92,29 @@ PipxU() {
 	pipx upgrade-all
 }
 
+PdmU() {
+	echo
+	echo
+	echo 'PDM Upgrade:'
+	echo
+	pdm update --self
+	pdm update
+}
+
 UvU() {
 	UvpipU() {
 		while true; do
 			echo
 			echo
+			UVPackageS=$(uv pip list --outdated --system)
 			read -rp "Continue to Upgrade Python Packages [THE UV WAY]..... [s|Y|n]: " syn
 			syn=${syn:-'y'}
 			case "$syn" in
 			[yY]*)
-				UVPackageS=$(uv pip list --outdated --system | awk 'NR>=3 {print $1}')
 				if [ -n "$UVPackageS" ]; then
+					echo "$UVPackageS"
 					echo
-					echo "$UVPackageS" | xargs -l1 uv pip install --break-system-packages --system -U
+					echo "$UVPackageS" | awk 'NR>=3 {print $1}' | xargs -l1 uv pip install --break-system-packages --system -U
 				else
 					echo
 					echo "No Python Packages to Upgrade....."
@@ -113,34 +123,33 @@ UvU() {
 				break
 				;;
 			[sS]*)
-				UVPackageS=$(uv pip list --outdated --system)
-				echo "$UVPackageS"
-				while true; do
-					echo
-					read -rp "Upgrade now..... [Y|n]: " yn
-					yn=${yn:-'y'}
-					case "$yn" in
-					[nN]*)
-						echo "Aborting....."
-						break
-						;;
-					[yY]*)
-						if [ -n "$UVPackageS" ]; then
+				if [ -n "$UVPackageS" ]; then
+					echo "$UVPackageS"
+					while true; do
+						echo
+						read -rp "Upgrade now..... [Y|n]: " yn
+						yn=${yn:-'y'}
+						case "$yn" in
+						[nN]*)
+							echo "Aborting....."
+							break
+							;;
+						[yY]*)
 							echo
 							echo "Upgrading Python Packages....."
 							echo "$UVPackageS" | awk 'NR>=3 {print $1}' | xargs -l1 uv pip install --break-system-packages --system -U
-						else
-							echo
-							echo "No Python Packages to Upgrade....."
-						fi
-						# uv pip freeze --system | cut -d '=' -f 1 | xargs uv pip install --break-system-packages --system -U
-						break
-						;;
-					*)
-						echo 'Wrong Choice.....'
-						;;
-					esac
-				done
+							# uv pip freeze --system | cut -d '=' -f 1 | xargs uv pip install --break-system-packages --system -U
+							break
+							;;
+						*)
+							echo 'Wrong Choice.....'
+							;;
+						esac
+					done
+				else
+					echo
+					echo "No Python Packages to Upgrade....."
+				fi
 				break
 				;;
 			[nN]*)
@@ -170,15 +179,6 @@ UvU() {
 	fi
 }
 
-PdmU() {
-	echo
-	echo
-	echo 'PDM Upgrade:'
-	echo
-	pdm update --self
-	pdm update
-}
-
 PipU() {
 	while true; do
 		echo
@@ -194,25 +194,30 @@ PipU() {
 			;;
 		[sS]*)
 			PIPPackageS=$(pip list -o)
-			echo "$PIPPackageS"
-			while true; do
+			if [ -n "$PIPPackageS" ]; then
+				echo "$PIPPackageS"
+				while true; do
+					echo
+					read -rp "Upgrade now..... [Y|n]: " yn
+					yn=${yn:-'y'}
+					case "$yn" in
+					[nN]*)
+						echo "Aborting....."
+						break
+						;;
+					[yY]*)
+						echo "$PIPPackageS" | awk 'NR>=3 {print $1}' | xargs -n1 pip install -U
+						break
+						;;
+					*)
+						echo 'Wrong Choice.....'
+						;;
+					esac
+				done
+			else
 				echo
-				read -rp "Upgrade now..... [Y|n]: " yn
-				yn=${yn:-'y'}
-				case "$yn" in
-				[nN]*)
-					echo "Aborting....."
-					break
-					;;
-				[yY]*)
-					echo "$PIPPackageS" | awk 'NR>=3 {print $1}' | xargs -n1 pip install -U
-					break
-					;;
-				*)
-					echo 'Wrong Choice.....'
-					;;
-				esac
-			done
+				echo "No Python Packages to Upgrade....."
+			fi
 			break
 			;;
 		[nN]*)
