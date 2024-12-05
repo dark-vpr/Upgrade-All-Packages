@@ -103,64 +103,34 @@ PdmU() {
 
 UvU() {
 	UvpipU() {
-		while true; do
-			echo
-			echo
-			UVPackageS=$(uv pip list --outdated --system)
-			read -rp "Continue to Upgrade Python Packages [THE UV WAY]..... [s|Y|n]: " syn
-			syn=${syn:-'y'}
-			case "$syn" in
-			[yY]*)
-				if [ -n "$UVPackageS" ]; then
-					echo "$UVPackageS"
+		echo
+		echo
+		UVPackageS=$(uv pip list --outdated --system)
+		if [ -n "$UVPackageS" ]; then
+			echo "$UVPackageS"
+			while true; do
+				read -rp "Continue to Upgrade Python Packages [THE UV WAY]..... [Y|n]: " yn
+				yn=${yn:-'y'}
+				case "$yn" in
+				[nN]*)
+					echo "Aborting....."
+					break
+					;;
+				[yY]*)
 					echo
+					echo "Upgrading Python Packages....."
 					echo "$UVPackageS" | awk 'NR>=3 {print $1}' | xargs -l1 uv pip install --break-system-packages --system -U
-				else
-					echo
-					echo "No Python Packages to Upgrade....."
-				fi
-				# uv pip freeze --system | cut -d '=' -f 1 | xargs uv pip install --break-system-packages --system -U
-				break
-				;;
-			[sS]*)
-				if [ -n "$UVPackageS" ]; then
-					echo "$UVPackageS"
-					while true; do
-						echo
-						read -rp "Upgrade now..... [Y|n]: " yn
-						yn=${yn:-'y'}
-						case "$yn" in
-						[nN]*)
-							echo "Aborting....."
-							break
-							;;
-						[yY]*)
-							echo
-							echo "Upgrading Python Packages....."
-							echo "$UVPackageS" | awk 'NR>=3 {print $1}' | xargs -l1 uv pip install --break-system-packages --system -U
-							# uv pip freeze --system | cut -d '=' -f 1 | xargs uv pip install --break-system-packages --system -U
-							break
-							;;
-						*)
-							echo 'Wrong Choice.....'
-							;;
-						esac
-					done
-				else
-					echo
-					echo "No Python Packages to Upgrade....."
-				fi
-				break
-				;;
-			[nN]*)
-				echo "Aborting....."
-				break
-				;;
-			*)
-				echo 'Wrong Choice.....'
-				;;
-			esac
-		done
+					# uv pip freeze --system | cut -d '=' -f 1 | xargs uv pip install --break-system-packages --system -U
+					break
+					;;
+				*)
+					echo 'Wrong Choice.....'
+					;;
+				esac
+			done
+		else
+			echo "No Python Packages to Upgrade....."
+		fi
 		echo
 		uv cache prune
 		pip cache purge
