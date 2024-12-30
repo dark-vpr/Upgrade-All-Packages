@@ -7,7 +7,7 @@ BLUE='\033[1;94m'
 PkgU() {
 	printf "\n${BLUE}%s${RESET}\n" "Upgrade:"
 	echo
-	pkg upgrade
+	pkg update && apt full-upgrade
 	echo
 	echo
 	echo 'Auto Purge:'
