@@ -21,7 +21,7 @@ Before you start using this tool, make sure you have the following prerequisites
 
 ## 📚 Supported Packages
 
-### 📦 Package Managers
+### 📦 System Package Managers
 
 - [`apt`](https://wiki.debian.org/Apt) or [`pkg`](https://wiki.termux.com/wiki/Package_Management): Package Manager
 - [`nala`](https://gitlab.com/volian/nala): APT front-end for Debian and Ubuntu
